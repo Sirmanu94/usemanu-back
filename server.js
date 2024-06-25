@@ -9,7 +9,22 @@ const port = process.env.PORT || 3001; // Utilizza la variabile d'ambiente per l
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+
+// Configurazione CORS
+const allowedOrigins = ['https://nome-frontend.vercel.app']; // Sostituisci con l'URL del tuo frontend
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // Permetti richieste senza un origin (come Postman o curl)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'L\'origine ' + origin + ' non è consentita dalle politiche CORS';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // Configurazione del trasportatore SMTP (esempio con Gmail)
 let transporter = nodemailer.createTransport({
