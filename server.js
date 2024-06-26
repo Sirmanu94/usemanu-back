@@ -1,11 +1,12 @@
+// server.js
+
 const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const port = process.env.PORT || 3001; // Utilizza la variabile d'ambiente per la porta
-dotenv.config();
+const port = 3001; // Puoi modificare la porta se necessario
 
 // Middleware
 app.use(bodyParser.json());
@@ -16,8 +17,8 @@ app.use(cors());
 let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.EMAIL_USER, // Usa la variabile d'ambiente per l'email
-    pass: process.env.EMAIL_PASS  // Usa la variabile d'ambiente per la password
+    user: 'emanueleavitabile1@gmail.com', // Inserisci qui la tua email
+    pass: 'zlvwlftvlprpvznb' // Inserisci qui la tua password
   }
 });
 
@@ -28,9 +29,9 @@ app.post('/contattaci', (req, res) => {
   // Opzioni per l'email
   let mailOptions = {
     from: email, // Mittente
-    to: process.env.EMAIL_USER, // Destinatario
+    to: 'emanueleavitabile1@gmail.com', // Destinatario
     subject: 'Messaggio da useManu.com', // Oggetto dell'email
-    text: `Nome: ${name}\nEmail: ${email}\nServizio: ${servizio}\nMessaggio: ${messaggio}` // Contenuto dell'email
+    text: `Nome: ${name}\nEmail: ${email}\n©Servizio:${servizio}\nMessaggio: ${messaggio}` // Contenuto dell'email
   };
 
   // Invia l'email
